@@ -1,0 +1,18 @@
+<div class="run-result {{ 'error' if result.exit_code != 0 else 'success' }}">
+    {% if result.stdout %}
+    <pre class="stdout">{{ result.stdout }}</pre>
+    {% endif %}
+    {% if result.stderr %}
+    <pre class="stderr">{{ result.stderr }}</pre>
+    {% endif %}
+    {% if not result.stdout and not result.stderr %}
+    <pre class="stdout">(no output)</pre>
+    {% endif %}
+    <div class="run-meta">
+        <span class="exit-code">Exit: {{ result.exit_code }}</span>
+        <span class="duration">{{ result.duration_ms }}ms</span>
+        {% if result.timed_out %}
+        <span class="timeout-badge">TIMEOUT</span>
+        {% endif %}
+    </div>
+</div>

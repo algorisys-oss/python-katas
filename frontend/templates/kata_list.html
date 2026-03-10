@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Python Katas{% endblock %}
+
+{% block content %}
+<div class="kata-list">
+    <h1>Python Katas</h1>
+    <p class="subtitle">79 katas: core Python mastery, then build a FastAPI-like framework from scratch.</p>
+
+    {% for module, katas in grouped_katas.items() %}
+    <section class="module-group">
+        <h2>{{ module }}</h2>
+        <div class="kata-grid">
+            {% for kata in katas %}
+            <a href="/kata/{{ kata.id }}" class="kata-card">
+                <span class="kata-number">{{ "%02d"|format(kata.number) }}</span>
+                <span class="kata-title">{{ kata.title }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endfor %}
+</div>
+{% endblock %}

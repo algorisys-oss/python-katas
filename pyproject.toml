@@ -1,0 +1,9 @@
+[project]
+name = "python-katas"
+version = "0.1.0"
+description = "Core Python mastery -> Build a FastAPI-like framework from scratch, step by step."
+requires-python = ">=3.12"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"

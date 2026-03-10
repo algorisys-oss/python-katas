@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Kata {{ "%02d"|format(kata.number) }}: {{ kata.title }}{% endblock %}
+
+{% block head %}
+<style>{{ pygments_css }}</style>
+{% endblock %}
+
+{% block content %}
+<div class="kata-detail">
+    <!-- Navigation -->
+    <nav class="kata-nav">
+        {% if prev_kata %}
+        <a href="/kata/{{ prev_kata.id }}" class="nav-prev">&larr; {{ "%02d"|format(prev_kata.number) }}. {{ prev_kata.title }}</a>
+        {% else %}
+        <span></span>
+        {% endif %}
+
+        <a href="/" class="nav-home">All Katas</a>
+
+        {% if next_kata %}
+        <a href="/kata/{{ next_kata.id }}" class="nav-next">{{ "%02d"|format(next_kata.number) }}. {{ next_kata.title }} &rarr;</a>
+        {% else %}
+        <span></span>
+        {% endif %}
+    </nav>
+
+    <h1>
+        <span class="kata-number-large">{{ "%02d"|format(kata.number) }}</span>
+        {{ kata.title }}
+    </h1>
+    <p class="module-badge">{{ kata.module }}</p>
+
+    <!-- Two-panel layout -->
+    <div class="panels">
+        <!-- Left: Tutorial -->
+        <div class="panel tutorial-panel">
+            <div class="panel-header">
+                <h2>Tutorial</h2>
+                <div class="panel-controls">
+                    <button class="panel-toggle" onclick="togglePanel('tutorial-panel')" title="Minimize">&#x2212;</button>
+                    <button class="panel-maximize" onclick="maximizePanel('tutorial-panel')" title="Fullscreen">&#x2922;</button>
+                </div>
+            </div>
+            <div class="tutorial-content">
+                {% if tutorial_html %}
+                {{ tutorial_html | safe }}
+                {% else %}
+                <p class="placeholder">Tutorial coming soon.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right: Code Editor + Output -->
+        <div class="panel editor-panel">
+            <div class="editor-header">
+                <h2>Playground</h2>
+                <div class="panel-controls">
+                    <button class="panel-toggle" onclick="togglePanel('editor-panel')" title="Minimize">&#x2212;</button>
+                    <button class="panel-maximize" onclick="maximizePanel('editor-panel')" title="Fullscreen">&#x2922;</button>
+                </div>
+                <div class="editor-actions">
+                    <button
+                        class="btn btn-run"
+                        onclick="runCode('{{ kata.id }}')"
+                    >
+                        Run
+                    </button>
+
+                    <button
+                        class="btn btn-reset"
+                        onclick="resetCode('{{ kata.id }}')"
+                    >
+                        Reset
+                    </button>
+
+                    <button
+                        class="btn btn-save"
+                        onclick="saveCode('{{ kata.id }}')"
+                    >
+                        Save
+                    </button>
+
+                    <button
+                        class="btn btn-solution"
+                        onclick="showSolution('{{ kata.id }}')"
+                    >
+                        Show Solution
+                    </button>
+
+                    <button
+                        class="btn btn-skeleton"
+                        onclick="loadSkeleton('{{ kata.id }}')"
+                    >
+                        Load Skeleton
+                    </button>
+
+                    {% if is_modified %}
+                    <span class="modified-badge">modified</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="editor-wrapper">
+                <textarea id="code-editor">{{ code }}</textarea>
+            </div>
+
+            <div class="output-section">
+                <h3>Output</h3>
+                <div id="code-output" class="output-area">
+                    <pre class="output-placeholder">Click "Run" to execute the code...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="kata-nav bottom-nav">
+        {% if prev_kata %}
+        <a href="/kata/{{ prev_kata.id }}" class="nav-prev">&larr; {{ "%02d"|format(prev_kata.number) }}. {{ prev_kata.title }}</a>
+        {% else %}
+        <span></span>
+        {% endif %}
+
+        <a href="/" class="nav-home">All Katas</a>
+
+        {% if next_kata %}
+        <a href="/kata/{{ next_kata.id }}" class="nav-next">{{ "%02d"|format(next_kata.number) }}. {{ next_kata.title }} &rarr;</a>
+        {% else %}
+        <span></span>
+        {% endif %}
+    </nav>
+</div>
+
+<script>
+    // Initialize CodeMirror
+    const editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+        mode: 'python',
+        theme: 'dracula',
+        lineNumbers: true,
+        indentUnit: 4,
+        tabSize: 4,
+        indentWithTabs: false,
+        lineWrapping: true,
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        extraKeys: {
+            "Ctrl-Enter": function() { runCode('{{ kata.id }}'); },
+            "Cmd-Enter": function() { runCode('{{ kata.id }}'); },
+            "Tab": function(cm) {
+                cm.replaceSelection("    ", "end");
+            }
+        }
+    });
+    editor.setSize("100%", "400px");
+</script>
+{% endblock %}
