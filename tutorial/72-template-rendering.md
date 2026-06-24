@@ -126,7 +126,7 @@ def _handle_for(self, tokens, start, context):
 
 ## Playground
 
-```python
+```bash
 python playground/72_template_rendering.py
 ```
 

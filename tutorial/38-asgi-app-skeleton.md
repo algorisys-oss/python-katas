@@ -184,7 +184,7 @@ async def data():
 
 ## Playground
 
-```python
+```bash
 python playground/38_asgi_app_skeleton.py
 ```
 

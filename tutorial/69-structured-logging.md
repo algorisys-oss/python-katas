@@ -94,7 +94,7 @@ class TimingMiddleware:
 
 ## Playground
 
-```python
+```bash
 python playground/69_structured_logging.py
 ```
 

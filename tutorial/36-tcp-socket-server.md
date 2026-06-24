@@ -171,7 +171,7 @@ def send_http_request(host, port, method, path):
 
 ## Playground
 
-```python
+```bash
 python playground/36_tcp_socket_server.py
 ```
 

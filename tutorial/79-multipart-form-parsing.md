@@ -226,7 +226,7 @@ In a real server you would not buffer the entire body in memory. Instead, stream
 
 ### Boundary in Body Data
 
-This cannot happen by design: the browser inspects the file data and picks a boundary string guaranteed not to appear in it. The RFC requires this.
+RFC 7578 requires that the boundary delimiter not appear inside any part, so clients pick a long, random boundary string that is *extremely unlikely* to occur in the data -- they don't actually scan every byte to guarantee it. A robust parser must still split strictly on the delimiter rules rather than assume a collision can never happen.
 
 ### Missing CRLF
 
@@ -338,7 +338,7 @@ class MultipartParser:
 
 ## Playground
 
-```python
+```bash
 python playground/79_multipart_form_parsing.py
 ```
 

@@ -164,7 +164,7 @@ async def app_with_lifespan(scope, receive, send):
 
 ## Playground
 
-```python
+```bash
 python playground/37_asgi_primer.py
 ```
 

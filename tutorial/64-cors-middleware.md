@@ -6,7 +6,7 @@
 
 ## What We're Building
 
-**CORS (Cross-Origin Resource Sharing) middleware** for our Ignite framework. When a frontend app at `https://myapp.com` calls an API at `https://api.myapp.com`, the browser blocks it by default (same-origin policy). CORS headers tell the browser which cross-origin requests are allowed. We build:
+**CORS (Cross-Origin Resource Sharing) middleware** for our Ignite framework. When a frontend app at `https://myapp.com` calls an API at `https://api.myapp.com`, the browser's same-origin policy steps in: for "simple" requests it still sends them but blocks JavaScript from *reading the response* unless the right CORS headers are present, and for non-simple requests it sends a preflight `OPTIONS` first and blocks the real request if the response doesn't allow it. CORS headers tell the browser which cross-origin requests are allowed. We build:
 
 1. **CORSConfig** -- configurable allowed origins, methods, headers, and credentials
 2. **Preflight handling** -- respond to OPTIONS requests with CORS permissions

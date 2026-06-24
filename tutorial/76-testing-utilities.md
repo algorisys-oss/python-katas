@@ -81,7 +81,7 @@ def assert_error(response, status_code, detail_contains=""):
 
 ## Playground
 
-```python
+```bash
 python playground/76_testing_utilities.py
 ```
 

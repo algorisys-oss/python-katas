@@ -187,7 +187,7 @@ Python 3.7+ provides `breakpoint()` as the standard way to drop into a debugger.
 
 ## Playground
 
-```python
+```bash
 python playground/33_logging_debugging.py
 ```
 

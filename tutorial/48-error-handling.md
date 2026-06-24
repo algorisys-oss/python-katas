@@ -149,7 +149,7 @@ class IgniteApp:
 
 ## Playground
 
-```python
+```bash
 python playground/48_error_handling.py
 ```
 

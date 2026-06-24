@@ -111,7 +111,7 @@ response.model_dump()
 
 ## Playground
 
-```python
+```bash
 python playground/47_response_models.py
 ```
 

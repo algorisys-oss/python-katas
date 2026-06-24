@@ -105,7 +105,7 @@ def search(
 
 ## Playground
 
-```python
+```bash
 python playground/51_type_driven_validation.py
 ```
 

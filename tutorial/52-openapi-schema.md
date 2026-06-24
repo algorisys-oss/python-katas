@@ -128,7 +128,7 @@ def _build_responses(self, route, schemas):
 
 ## Playground
 
-```python
+```bash
 python playground/52_openapi_schema.py
 ```
 

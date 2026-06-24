@@ -89,7 +89,7 @@ class StaticFileHandler:
 
 ## Playground
 
-```python
+```bash
 python playground/71_static_files.py
 ```
 

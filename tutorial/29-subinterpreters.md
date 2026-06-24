@@ -14,20 +14,20 @@ We'll build four practical demos:
 3. **True parallelism** -- demonstrate that subinterpreters bypass the GIL for CPU-bound work
 4. **Comparison with threading and multiprocessing** -- understand the tradeoffs
 
-> **Note:** The `interpreters` module (PEP 734) is experimental in Python 3.12/3.13. The API may change in future releases, and some builds may not include it. All examples in this kata gracefully handle the case where the module is unavailable.
+> **Note:** Subinterpreters (PEP 734) shipped as the stdlib **`concurrent.interpreters`** module in **Python 3.14** -- import it with `from concurrent import interpreters`. On Python 3.12/3.13 the API was experimental and only reachable via the private `_interpreters` module (or a standalone backport), and some builds omit it entirely. All examples in this kata gracefully handle the case where the module is unavailable.
 
 ## Concepts You'll Learn
 
 | Concept | What It Does | When to Use |
 |---|---|---|
-| PEP 734 (`interpreters` module) | High-level API for subinterpreters | True parallelism without process overhead |
+| PEP 734 (`concurrent.interpreters`) | High-level API for subinterpreters | True parallelism without process overhead |
 | `interpreters.create()` | Create a new subinterpreter | When you need isolated execution |
 | `interpreters.list_all()` | List all active interpreters | Debugging, monitoring |
-| `interp.run(code)` | Execute code in a subinterpreter | Running isolated computations |
+| `interp.exec(code)` | Execute a code string in a subinterpreter | Running isolated computations |
+| `interp.call(fn, *args)` | Call a picklable function in a subinterpreter | Running isolated callables |
 | `interp.close()` | Destroy a subinterpreter | Cleanup after use |
 | Separate GIL per interpreter | Each interpreter has its own GIL | CPU-bound parallelism |
-| Channel communication | Send/receive data between interpreters | Sharing results across interpreters |
-| `interpreters.Queue` | Thread-safe queue for inter-interpreter data | Structured data exchange |
+| `interpreters.create_queue()` | Thread-safe queue for inter-interpreter data | Structured data exchange |
 | Isolation model | No shared Python objects between interpreters | Safety, no race conditions on Python objects |
 
 ## The Code
@@ -52,14 +52,14 @@ Subinterpreters combine the best of both worlds: true parallelism (separate GILs
 ### Creating a Subinterpreter
 
 ```python
-import interpreters
+from concurrent import interpreters
 
 # Create a new subinterpreter
 interp = interpreters.create()
 
 # Run code in it
-interp.run('x = 1 + 2')
-interp.run('print(f"Result: {x}")')  # prints "Result: 3"
+interp.exec('x = 1 + 2')
+interp.exec('print(f"Result: {x}")')  # prints "Result: 3"
 
 # The main interpreter can't see x -- it's isolated
 # x would raise NameError here in the main interpreter
@@ -71,13 +71,13 @@ interp.close()
 Key points:
 - Each subinterpreter is a fully isolated Python environment
 - Variables defined in one interpreter are invisible to others
-- `run()` executes a string of Python code in the subinterpreter
+- `exec()` runs a string of Python code in the subinterpreter (use `call()` to invoke a function)
 - Always `close()` interpreters when done (or use them as context managers)
 
 ### Listing Interpreters
 
 ```python
-import interpreters
+from concurrent import interpreters
 
 # The main interpreter is always ID 0
 all_interps = interpreters.list_all()
@@ -100,20 +100,20 @@ interp2.close()
 Subinterpreters can communicate through channels -- a send/receive pair for passing data:
 
 ```python
-import interpreters
+from concurrent import interpreters
 
 # Create a queue for communication
-queue = interpreters.Queue()
+queue = interpreters.create_queue()
 
 interp = interpreters.create()
 
 # The subinterpreter puts data on the queue
-interp.run("""
-import interpreters
+interp.exec("""
+from concurrent import interpreters
 result = sum(range(1000))
 """)
 
-# For simple data, we can use run() and capture via shared queues
+# For simple data, we can use exec() and capture via shared queues
 # The queue supports basic types: str, int, float, bytes, bool, None
 ```
 
@@ -126,14 +126,14 @@ Channels support these types (shareable across interpreters):
 The killer feature of subinterpreters is that each one has its own GIL:
 
 ```python
-import interpreters
+from concurrent import interpreters
 import threading
 import time
 
 def run_in_subinterpreter(code: str):
     """Create a subinterpreter, run code, close it."""
     interp = interpreters.create()
-    interp.run(code)
+    interp.exec(code)
     interp.close()
 
 cpu_code = """
@@ -214,7 +214,7 @@ Subinterpreters provide true parallelism within a single process:
   - Lower overhead than multiprocessing (no process spawn)
   - Full isolation (no shared Python objects)
   - Channel-based communication for data exchange
-  - Experimental API (Python 3.12+, PEP 734)
+  - Stdlib API since Python 3.14 (PEP 734)
   - Best for: CPU-bound tasks needing lightweight parallelism
 
 All sections completed. Subinterpreters explored!
@@ -291,7 +291,7 @@ def producer_consumer():
     # TODO: create a Queue
     # TODO: create a producer interpreter that puts items on the queue
     # TODO: create a consumer interpreter that gets items from the queue
-    # HINT: interpreters.Queue() for communication
+    # HINT: interpreters.create_queue() for communication
     ...
 ```
 

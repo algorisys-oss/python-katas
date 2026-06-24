@@ -122,7 +122,7 @@ class DevServer:
 
 ## Playground
 
-```python
+```bash
 python playground/67_hot_reload.py
 ```
 

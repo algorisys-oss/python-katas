@@ -117,7 +117,7 @@ def list_users(db: Database = Depends(get_db)):
 
 ## Playground
 
-```python
+```bash
 python playground/50_parameter_injection.py
 ```
 

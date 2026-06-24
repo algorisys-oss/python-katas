@@ -91,7 +91,7 @@ class RateLimitMiddleware:
 
 ## Playground
 
-```python
+```bash
 python playground/74_rate_limiting.py
 ```
 

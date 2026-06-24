@@ -35,7 +35,7 @@ This kata ties together everything from Module 4 (memory, imports, testing) -- a
 
 ### 1. pyproject.toml Anatomy
 
-The `pyproject.toml` file replaced `setup.py`, `setup.cfg`, and `requirements.txt` as the single source of truth for Python projects (PEP 518, PEP 621).
+The `pyproject.toml` file is the modern standard for build-system configuration and project metadata (PEP 518, PEP 621), consolidating what used to live in `setup.py` and `setup.cfg`. Those legacy setuptools files still work, and `requirements.txt` is still widely used for *pinned* application/environment dependencies -- a different job from the abstract dependencies declared here.
 
 ```python
 import tomllib  # Python 3.11+ (use tomli for older versions)
@@ -245,7 +245,7 @@ def is_namespace_package(name: str) -> bool:
 
 ## Playground
 
-```python
+```bash
 python playground/35_packaging.py
 ```
 

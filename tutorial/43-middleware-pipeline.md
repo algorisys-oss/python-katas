@@ -123,7 +123,7 @@ class MiddlewareStack:
 
 ## Playground
 
-```python
+```bash
 python playground/43_middleware_pipeline.py
 ```
 

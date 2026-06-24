@@ -212,7 +212,7 @@ The GIL switches between threads mid-increment (`counter += 1` is three bytecode
 
 The full playground script combines all demos with assertions and clear output:
 
-```python
+```bash
 python playground/22_the_gil_explained.py
 ```
 

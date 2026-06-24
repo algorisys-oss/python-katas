@@ -15,7 +15,7 @@
 5. **Dependencies** -- `get_current_user()` and `require_role()` for Depends()
 6. **Protected decorator** -- `@protected(secret)` for route-level auth
 
-This is how FastAPI's OAuth2 bearer, Express.js `passport-jwt`, and Django REST Framework's token auth work under the hood.
+This JWT-based approach mirrors Express.js `passport-jwt` and the bearer-token flows you build on FastAPI's `OAuth2PasswordBearer`. Note the details differ in practice: FastAPI's `OAuth2PasswordBearer` only *extracts* the bearer token from the header (you verify it yourself), and Django REST Framework's built-in `TokenAuthentication` uses opaque, database-backed tokens -- not JWTs -- by default.
 
 ## Concepts You'll Learn
 

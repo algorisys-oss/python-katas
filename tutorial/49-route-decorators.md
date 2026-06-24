@@ -108,7 +108,7 @@ def dispatch(self, request):
 
 ## Playground
 
-```python
+```bash
 python playground/49_route_decorators.py
 ```
 

@@ -124,7 +124,7 @@ This means a route like `/items/{item_id:int}` naturally coexists with `/items/s
 
 ## Playground
 
-```python
+```bash
 python playground/42_path_parameters.py
 ```
 

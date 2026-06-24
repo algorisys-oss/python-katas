@@ -100,7 +100,7 @@ class ChatServer:
 
 ## Playground
 
-```python
+```bash
 python playground/78_realtime_chat.py
 ```
 

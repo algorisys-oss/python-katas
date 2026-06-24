@@ -6,8 +6,9 @@ True parallelism within a single process using subinterpreters (PEP 734).
 Each subinterpreter has its own GIL, enabling CPU-bound parallelism without
 the overhead of multiprocessing.
 
-NOTE: The interpreters module is experimental in Python 3.12/3.13.
-All demos gracefully handle the case where it's unavailable.
+NOTE: Subinterpreters ship as the `concurrent.interpreters` module in Python 3.14+.
+On 3.12/3.13 the API was experimental (private `_interpreters` module) and some
+builds omit it, so all demos gracefully handle the case where it's unavailable.
 
 IMPORTANT: Must complete within 5 seconds.
 """
@@ -16,64 +17,67 @@ import sys
 import threading
 import time
 
-# Try to import the interpreters module (experimental, may not be available)
+# Try to import a subinterpreters module. Preference order:
+#   1. concurrent.interpreters -- public stdlib API (Python 3.14+)
+#   2. interpreters            -- experimental standalone backport
+#   3. _interpreters           -- private low-level module (3.12/3.13 builds)
 _interpreters_available = False
 _interpreters_module = None
+_API = None  # one of: "public", "private"
 
 try:
-    import _interpreters
-    _interpreters_module = _interpreters
+    from concurrent import interpreters as _interpreters_module
     _interpreters_available = True
-    _USE_PRIVATE_API = True
+    _API = "public"
 except ImportError:
-    _USE_PRIVATE_API = False
     try:
-        import interpreters  # type: ignore[import-not-found]
-        _interpreters_module = interpreters
+        import interpreters as _interpreters_module  # type: ignore[import-not-found]
         _interpreters_available = True
+        _API = "public"
     except ImportError:
-        pass
+        try:
+            import _interpreters as _interpreters_module
+            _interpreters_available = True
+            _API = "private"
+        except ImportError:
+            pass
 
 
 # ===========================================================================
-# Helper functions to abstract over the private/public API
+# Helper functions to abstract over the public/private API
 # ===========================================================================
 
 def _create_interpreter():
     """Create a new subinterpreter, returning its ID or object."""
-    if _USE_PRIVATE_API:
-        return _interpreters.create()
-    else:
-        return _interpreters_module.create()
+    return _interpreters_module.create()
 
 
 def _run_in_interpreter(interp, code: str):
     """Run code string in the given subinterpreter."""
-    if _USE_PRIVATE_API:
-        _interpreters.run_string(interp, code)
+    if _API == "private":
+        _interpreters_module.run_string(interp, code)
     else:
-        interp.run(code)
+        # Public API: prefer exec() (3.14+), fall back to run() (older backport)
+        runner = getattr(interp, "exec", None) or getattr(interp, "run")
+        runner(code)
 
 
 def _close_interpreter(interp):
     """Close/destroy a subinterpreter."""
-    if _USE_PRIVATE_API:
-        _interpreters.destroy(interp)
+    if _API == "private":
+        _interpreters_module.destroy(interp)
     else:
         interp.close()
 
 
 def _list_all_interpreters():
     """List all active interpreters."""
-    if _USE_PRIVATE_API:
-        return _interpreters.list_all()
-    else:
-        return _interpreters_module.list_all()
+    return _interpreters_module.list_all()
 
 
 def _get_interp_id(interp):
     """Get a printable ID for an interpreter."""
-    if _USE_PRIVATE_API:
+    if _API == "private":
         return interp  # _interpreters returns raw int IDs
     else:
         return interp.id if hasattr(interp, 'id') else interp
@@ -323,11 +327,11 @@ if __name__ == "__main__":
         print("  - Lower overhead than multiprocessing (no process spawn)")
         print("  - Full isolation (no shared Python objects)")
         print("  - Channel-based communication for data exchange")
-        print("  - Experimental API (Python 3.12+, PEP 734)")
+        print("  - Stdlib API since Python 3.14 (PEP 734)")
         print("  - Best for: CPU-bound tasks needing lightweight parallelism")
         print()
-        print("To try subinterpreters, use Python 3.12+ built with subinterpreter support.")
-        print("The API is available via 'import interpreters' or 'import _interpreters'.")
+        print("To try subinterpreters, use Python 3.14+ ('from concurrent import interpreters').")
+        print("On 3.12/3.13 the experimental private '_interpreters' module may be available.")
         print()
         print("All sections completed (with graceful skips). Subinterpreters explored!")
     else:
@@ -358,7 +362,7 @@ if __name__ == "__main__":
         print("  - Lower overhead than multiprocessing (no process spawn)")
         print("  - Full isolation (no shared Python objects)")
         print("  - Channel-based communication for data exchange")
-        print("  - Experimental API (Python 3.12+, PEP 734)")
+        print("  - Stdlib API since Python 3.14 (PEP 734)")
         print("  - Best for: CPU-bound tasks needing lightweight parallelism")
         print()
         print("All sections completed. Subinterpreters explored!")

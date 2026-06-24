@@ -126,7 +126,7 @@ resolver.clear_overrides()
 
 ## Playground
 
-```python
+```bash
 python playground/44_dependency_injection.py
 ```
 

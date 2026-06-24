@@ -112,7 +112,7 @@ class HealthEndpoints:
 
 ## Playground
 
-```python
+```bash
 python playground/73_health_check.py
 ```
 

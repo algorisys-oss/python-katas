@@ -90,7 +90,7 @@ class IgniteCLI:
 
 ## Playground
 
-```python
+```bash
 python playground/70_cli_tool.py
 ```
 

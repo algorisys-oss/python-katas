@@ -118,7 +118,7 @@ async def __call__(self, scope, receive, send):
 
 ## Playground
 
-```python
+```bash
 python playground/53_swagger_ui.py
 ```
 

@@ -121,7 +121,7 @@ class DebugMiddleware:
 
 ## Playground
 
-```python
+```bash
 python playground/68_debug_error_page.py
 ```
 

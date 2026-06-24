@@ -113,7 +113,7 @@ def list_articles(
 
 ## Playground
 
-```python
+```bash
 python playground/46_query_parameters.py
 ```
 

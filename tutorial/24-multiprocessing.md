@@ -168,7 +168,7 @@ if __name__ == "__main__":
 
 ## Playground
 
-```python
+```bash
 python playground/24_multiprocessing.py
 ```
 

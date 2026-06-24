@@ -76,7 +76,7 @@ class TaskQueue:
 
 ## Playground
 
-```python
+```bash
 python playground/75_background_tasks.py
 ```
 

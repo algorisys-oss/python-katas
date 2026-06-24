@@ -147,7 +147,7 @@ def create_user(request, body: CreateUser):
 
 ## Playground
 
-```python
+```bash
 python playground/45_request_body_validation.py
 ```
 

@@ -51,7 +51,7 @@ def verify_signed_token(signed, secret):
 
 ### 2. The Double-Submit Pattern
 
-```python
+```text
 # Step 1: Server sets CSRF token in a cookie (JS-readable, no HttpOnly)
 Set-Cookie: csrf_token=abc123.signature; SameSite=Strict
 

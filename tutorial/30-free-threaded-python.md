@@ -136,7 +136,7 @@ def increment_safe():
 
 What changes without the GIL:
 - **`x += 1` is NOT atomic** -- it was never guaranteed to be, but the GIL masked the bug
-- **List/dict operations need locks** -- concurrent `.append()` can corrupt internal state
+- **Compound operations on containers still need locks** -- CPython's built-in `list`/`dict`/`set` use internal locks, so a single `.append()` won't corrupt memory, but multi-step invariants (check-then-act, read-modify-write) still race. Don't rely on that internal locking as a language guarantee -- use a `Lock` for correctness and portability
 - **Global mutable state is dangerous** -- module-level variables shared across threads need protection
 - **C extensions must be thread-safe** -- extensions that relied on the GIL for safety will break
 

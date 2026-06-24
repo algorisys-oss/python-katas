@@ -94,7 +94,7 @@ def get_todo(request):
 
 ## Playground
 
-```python
+```bash
 python playground/77_todo_api.py
 ```
 
