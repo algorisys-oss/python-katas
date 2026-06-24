@@ -52,8 +52,7 @@ async def kata_list(request: Request):
     grouped = defaultdict(list)
     for k in katas:
         grouped[k["module"]].append(k)
-    return templates.TemplateResponse("kata_list.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "kata_list.html", {
         "grouped_katas": dict(grouped),
     })
 
@@ -74,8 +73,7 @@ async def kata_detail(request: Request, kata_id: str):
     prev_kata = all_katas[current_idx - 1] if current_idx > 0 else None
     next_kata = all_katas[current_idx + 1] if current_idx < len(all_katas) - 1 else None
 
-    return templates.TemplateResponse("kata_detail.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "kata_detail.html", {
         "kata": kata,
         "code": code,
         "is_modified": is_modified,
@@ -99,8 +97,7 @@ async def run_kata(request: Request, kata_id: str, code: str = Form(...)):
     result = run_code(code)
     save_run(kata_id, code, result.stdout, result.stderr, result.exit_code, result.duration_ms)
 
-    return templates.TemplateResponse("partials/output.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "partials/output.html", {
         "result": result,
     })
 

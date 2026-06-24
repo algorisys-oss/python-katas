@@ -4,7 +4,7 @@ Core Python mastery, then build a FastAPI-like framework from scratch -- step by
 
 ## What's Inside
 
-**79 katas** across 12 modules:
+**81 katas** across 12 modules:
 
 | Module | Katas | Focus |
 |--------|-------|-------|
@@ -12,7 +12,7 @@ Core Python mastery, then build a FastAPI-like framework from scratch -- step by
 | OOP & SOLID | 11–20 | Classes, descriptors, metaclasses, SOLID principles |
 | Concurrency | 21–30 | Threading, GIL, multiprocessing, async, free-threaded Python |
 | Advanced Features | 31–35 | Memory, imports, testing, packaging |
-| Build Ignite (FastAPI clone) | 36–78 | HTTP, routing, DI, validation, WebSocket, auth, and more |
+| Build Ignite (FastAPI clone) | 36–80 | HTTP, routing, DI, validation, WebSocket, auth, file uploads, and more |
 
 ## Quick Start
 
@@ -34,7 +34,7 @@ cd backend && python seed.py && cd ..
 cd backend && python app.py
 ```
 
-Open **http://localhost:8000** in your browser.
+Open **http://localhost:9999** in your browser.
 
 ## Running Without the Webapp
 
