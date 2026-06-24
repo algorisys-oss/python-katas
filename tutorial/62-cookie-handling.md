@@ -86,6 +86,8 @@ def delete_cookie(name, path="/"):
 
 ### 4. CookieJar
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class CookieJar:
     def load(self, header):        # Parse Cookie request header

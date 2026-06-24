@@ -10,7 +10,7 @@ A hands-on exploration of Python's **subinterpreters** -- a concurrency model th
 
 We'll build four practical demos:
 1. **Creating and running subinterpreters** -- spawn isolated Python interpreters within a single process
-2. **Channel-based communication** -- send data between interpreters using `interpreters.channels`
+2. **Queue-based communication** -- send data between interpreters using `interpreters.create_queue()`
 3. **True parallelism** -- demonstrate that subinterpreters bypass the GIL for CPU-bound work
 4. **Comparison with threading and multiprocessing** -- understand the tradeoffs
 
@@ -95,9 +95,9 @@ interp1.close()
 interp2.close()
 ```
 
-### Channel Communication
+### Queue Communication
 
-Subinterpreters can communicate through channels -- a send/receive pair for passing data:
+Subinterpreters communicate through a `Queue` -- a thread-safe send/receive pipe for passing data:
 
 ```python
 from concurrent import interpreters
@@ -117,7 +117,7 @@ result = sum(range(1000))
 # The queue supports basic types: str, int, float, bytes, bool, None
 ```
 
-Channels support these types (shareable across interpreters):
+Queues support these types (shareable across interpreters):
 - `str`, `bytes`, `int`, `float`, `bool`, `None`
 - These are copied (not shared) between interpreters
 
@@ -281,7 +281,7 @@ def subinterpreter_pool(task_code: str, count: int = 4):
 subinterpreter_pool("total = sum(range(100_000))", count=4)
 ```
 
-### Exercise 2: Producer-consumer with channels
+### Exercise 2: Producer-consumer with queues
 
 Build a producer-consumer pattern using subinterpreters and queues:
 

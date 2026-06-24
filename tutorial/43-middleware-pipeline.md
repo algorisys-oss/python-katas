@@ -91,6 +91,8 @@ class TimingMiddleware(Middleware):
 
 A middleware can respond directly without calling the inner app:
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class AuthMiddleware(Middleware):
     async def __call__(self, scope, receive, send):

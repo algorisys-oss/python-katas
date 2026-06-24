@@ -73,6 +73,8 @@ def resolve_var(context, path):
 
 Chain transformations with `|`:
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 # "name|upper|strip" -> upper(strip(resolve("name")))
 BUILTIN_FILTERS = {
@@ -88,6 +90,8 @@ BUILTIN_FILTERS = {
 ### 4. Control Flow
 
 Walk tokens, tracking nesting depth for nested blocks:
+
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
 
 ```python
 def _handle_if(self, tokens, start, context):

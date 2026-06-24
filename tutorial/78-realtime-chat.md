@@ -31,6 +31,8 @@ A **real-time chat system** -- our final capstone project that combines HTTP rou
 
 ### 1. Message Store
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class MessageStore:
     def save_message(self, room_id, username, content, msg_type="message"):
@@ -78,6 +80,8 @@ class WebSocketBroadcaster:
 ```
 
 ### 4. Chat Server
+
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
 
 ```python
 class ChatServer:

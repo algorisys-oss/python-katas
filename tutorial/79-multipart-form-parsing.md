@@ -50,7 +50,7 @@ When the browser sends a multipart request, the `Content-Type` header carries th
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryXyZ123
 ```
 
-The boundary is a string that does **not** appear in any of the field values. Browsers generate it randomly to guarantee uniqueness. You extract it from the header before parsing the body.
+The boundary is a string that should **not** appear in any of the field values. Browsers choose a long, random boundary that is extremely unlikely to occur in the body (RFC 7578 requires the delimiter not appear inside any part). You extract it from the header before parsing the body.
 
 ```python
 import re

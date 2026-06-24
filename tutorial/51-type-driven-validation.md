@@ -60,6 +60,8 @@ class Field:
 
 ### 2. ValidatedModel
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class ValidatedModel:
     def __init__(self, **kwargs):

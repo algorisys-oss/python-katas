@@ -30,6 +30,8 @@ A **rate limiting system** for our Ignite framework. Rate limiting protects your
 
 ### 1. Sliding Window Algorithm
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class SlidingWindowLimiter:
     def __init__(self, max_requests, window_seconds):

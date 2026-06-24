@@ -119,6 +119,8 @@ Redirects have an empty body and a `Location` header. The browser follows the re
 
 ### 5. StreamingResponse
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class StreamingResponse:
     def __init__(self, content_iterator, status_code=200,

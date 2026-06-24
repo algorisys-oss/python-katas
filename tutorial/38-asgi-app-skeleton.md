@@ -62,6 +62,8 @@ The `__call__` method is what makes `Ignite` an ASGI callable. When uvicorn impo
 
 ### 2. Route Registration
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
     def route(self, path, methods=None):
         """Register a route handler (decorator)."""
@@ -101,6 +103,8 @@ async def data():
 
 ### 3. HTTP Request Handling
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
     async def _handle_http(self, scope, receive, send):
         # Read request body
@@ -135,6 +139,8 @@ async def data():
 
 ### 4. Response Helper
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
     async def _send_response(self, send, status, body, content_type):
         """Send a complete HTTP response (two ASGI messages)."""
@@ -154,6 +160,8 @@ async def data():
 ```
 
 ### 5. Lifespan Events
+
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
 
 ```python
     def on_startup(self, func):

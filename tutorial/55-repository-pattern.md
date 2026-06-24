@@ -86,6 +86,8 @@ class SQLiteRepository(AbstractRepository[T], ABC):
 
 Each entity gets a thin subclass:
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class UserRepository(SQLiteRepository[User]):
     @property

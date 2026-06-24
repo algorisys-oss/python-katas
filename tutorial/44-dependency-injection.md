@@ -259,6 +259,9 @@ Production:                  Testing:
 3. **Scoped dependencies** -- implement `Depends(get_db, scope="app")` where `scope="app"` means the dependency is resolved once for the entire app lifetime (singleton), not per-request. Add a separate app-level cache.
 
 4. **Dependency with cleanup** -- support generator dependencies that yield a value and run cleanup code after the request. For example, a database connection that auto-commits or rolls back:
+
+   *Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
    ```python
    def get_db_session():
        session = create_session()

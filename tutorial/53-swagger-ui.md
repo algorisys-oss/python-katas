@@ -101,6 +101,8 @@ def _handle_docs_request(self, path):
 
 ### 4. ASGI Integration
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 async def __call__(self, scope, receive, send):
     path = scope.get("path", "/")

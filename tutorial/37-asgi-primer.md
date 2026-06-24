@@ -117,6 +117,8 @@ lifespan_scope = {
 
 Since we can't run uvicorn in a 5-second subprocess, we simulate the ASGI server:
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class AsgiSimulator:
     def __init__(self, request_body=b""):

@@ -64,6 +64,8 @@ The generator walks each route, inspects its handler's `inspect.signature()`, an
 
 ### 2. Parameter Classification
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 def _extract_params(self, route, schemas):
     sig = inspect.signature(route.handler)
@@ -110,6 +112,8 @@ class CreatePet(BaseModel):
 ```
 
 ### 4. Response Model + Error Responses
+
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
 
 ```python
 def _build_responses(self, route, schemas):

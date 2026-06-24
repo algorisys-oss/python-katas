@@ -50,6 +50,8 @@ class CheckResult:
 
 The registry stores callable health checks, runs them with timing, and catches any exceptions:
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 class HealthCheckRegistry:
     def register(self, name, check, *, liveness=False, readiness=True):

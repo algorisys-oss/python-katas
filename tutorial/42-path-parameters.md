@@ -61,6 +61,8 @@ TYPE_REGEXES = {
 
 The compiler walks through the pattern, replacing each `{param}` with the corresponding regex:
 
+*Excerpt — core logic only (some details elided); not a standalone runnable snippet.*
+
 ```python
 def compile_path(pattern: str, handler, method="GET"):
     params = []
